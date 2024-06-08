@@ -3,9 +3,8 @@ from .i_vector_function import IVectorFunction
 
 
 class QuotientFunction(IVectorFunction):
-
     def __call__(self, x: torch.Tensor) -> torch.Tensor:
-        return x[:, 0:1] / x[:, 1:2]
+        return torch.nan_to_num(x[:, 0:1] / x[:, 1:2])
 
     @property
     def num_inputs(self) -> int:

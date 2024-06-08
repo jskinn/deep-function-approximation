@@ -2,13 +2,13 @@ import torch
 from .i_vector_function import IVectorFunction
 
 
-class SumFunction(IVectorFunction):
+class CosineFunction(IVectorFunction):
     def __call__(self, x: torch.Tensor) -> torch.Tensor:
-        return x[:, 0:1] + x[:, 1:2]
+        return torch.cos(x)
 
     @property
-    def num_inputs(self) -> int:
-        return 2
+    def num_inputs(self) -> None:
+        return 1
 
     @property
     def num_outputs(self) -> int:

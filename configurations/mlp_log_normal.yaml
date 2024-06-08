@@ -5,15 +5,15 @@ trainer:
     - class_path: lightning.pytorch.loggers.TensorBoardLogger
       init_args:
         save_dir: "lightning_logs"
-        name: "mlp_quotient_normal"
+        name: "mlp_log_normal"
     - class_path: lightning.pytorch.loggers.MLFlowLogger
       init_args:
         experiment_name: "vector function approximation"
-        run_name: "mlp quotient normal"
+        run_name: "mlp logarithm normal"
         tracking_uri: "http://localhost:8080"
         tags:
           network: "mlp"
-          function: "quotient"
+          function: "logarithm"
           data_distribution: "normal"
           mlp_hidden_size: "d128"
           mlp_nonlin: "relu"
@@ -31,7 +31,7 @@ model:
     network:
       class_path: deep_function_approximation.function_approximators.mlp_approximator.MLPApproximator
       init_args:
-        num_inputs: 2
+        num_inputs: 1
         num_outputs: 1
         hidden_size: 128
         nonlin:
@@ -46,7 +46,7 @@ data:
   class_path: deep_function_approximation.data_modules.VectorFunctionDataModule
   init_args:
     function:
-      class_path: deep_function_approximation.vector_functions.quotient.QuotientFunction
+      class_path: deep_function_approximation.vector_functions.log.LogarithmFunction
     batch_size: 16
     block_size: 256
     num_workers: 10

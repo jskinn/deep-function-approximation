@@ -3,9 +3,8 @@ from .i_vector_function import IVectorFunction
 
 
 class ProductFunction(IVectorFunction):
-
     def __call__(self, x: torch.Tensor) -> torch.Tensor:
-        return x[:, 0] * x[:, 1]
+        return x[:, 0:1] * x[:, 1:2]
 
     @property
     def num_inputs(self) -> int:

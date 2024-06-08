@@ -2,13 +2,13 @@ import torch
 from .i_vector_function import IVectorFunction
 
 
-class SumFunction(IVectorFunction):
+class AbsoluteValueFunction(IVectorFunction):
     def __call__(self, x: torch.Tensor) -> torch.Tensor:
-        return x[:, 0:1] + x[:, 1:2]
+        return torch.abs(x)
 
     @property
     def num_inputs(self) -> int:
-        return 2
+        return 1
 
     @property
     def num_outputs(self) -> int:
