@@ -2,13 +2,13 @@ import torch
 from .i_vector_function import IVectorFunction
 
 
-class SineFunction(IVectorFunction):
+class SquareDifferenceFunction(IVectorFunction):
     def __call__(self, x: torch.Tensor) -> torch.Tensor:
-        return torch.sin(x)
+        return (x[:, 0:1] - x[:, 1:2]).square()
 
     @property
     def num_inputs(self) -> int:
-        return 1
+        return 2
 
     @property
     def num_outputs(self) -> int:
