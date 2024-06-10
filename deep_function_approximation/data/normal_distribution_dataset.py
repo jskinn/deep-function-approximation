@@ -1,10 +1,10 @@
 import torch
 from torch.utils.data import Dataset
 from deep_function_approximation.vector_functions import IVectorFunction
-from .vector_function_batch import VectorFunctionBatch
+from .function_batch import FunctionBatch
 
 
-class NormalDistributionDataset(Dataset[VectorFunctionBatch]):
+class NormalDistributionDataset(Dataset[FunctionBatch]):
     def __init__(
         self,
         epoch_length: int,
@@ -24,7 +24,7 @@ class NormalDistributionDataset(Dataset[VectorFunctionBatch]):
     def __len__(self) -> int:
         return self.epoch_length
 
-    def __getitem__(self, item: int) -> VectorFunctionBatch:
+    def __getitem__(self, item: int) -> FunctionBatch:
         if not 0 <= item < len(self):
             raise IndexError(f"Index {item} out of range")
         vector_dim = self.function.num_inputs
@@ -32,4 +32,4 @@ class NormalDistributionDataset(Dataset[VectorFunctionBatch]):
             vector_dim = self.vector_dim
         x = self.std * torch.randn(self.block_size, vector_dim) + self.mean
         y = self.function(x)
-        return VectorFunctionBatch(x, y)
+        return FunctionBatch(x, y)

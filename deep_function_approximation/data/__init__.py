@@ -1,3 +1,4 @@
-from .vector_function_batch import VectorFunctionBatch
+from .function_batch import FunctionBatch
 from .normal_distribution_dataset import NormalDistributionDataset
 from .exponential_distribution_dataset import ExponentialDistributionDataset
+from .matrix_normal_dataset import MatrixNormalDataset

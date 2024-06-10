@@ -2,6 +2,6 @@ from typing import NamedTuple
 from torch import Tensor
 
 
-class VectorFunctionBatch(NamedTuple):
+class FunctionBatch(NamedTuple):
     x: Tensor
     y: Tensor

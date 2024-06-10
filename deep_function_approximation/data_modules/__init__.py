@@ -1,1 +1,2 @@
 from .vector_function_data_module import VectorFunctionDataModule
+from .matrix_function_data_module import MatrixFunctionDataModule

@@ -1,23 +1,25 @@
 import torch
 from torch.utils.data import Dataset
-from deep_function_approximation.vector_functions import IVectorFunction
+from deep_function_approximation.matrix_functions import IMatrixFunction
 from .function_batch import FunctionBatch
 
 
-class ExponentialDistributionDataset(Dataset[FunctionBatch]):
+class MatrixNormalDataset(Dataset[FunctionBatch]):
     def __init__(
         self,
         epoch_length: int,
         block_size: int,
-        function: IVectorFunction,
-        vector_dim: int = 1,
-        lambd: float = 1.0
+        function: IMatrixFunction,
+        input_shape: tuple[int, int] = (2, 2),
+        mean: float = 0.0,
+        std: float = 1.0
     ):
         self.epoch_length = int(epoch_length)
         self.block_size = int(block_size)
-        self.vector_dim = int(vector_dim)
+        self.input_shape = input_shape
+        self.mean = float(mean)
+        self.std = float(std)
         self.function = function
-        self.lambd = float(lambd)
 
     def __len__(self) -> int:
         return self.epoch_length
@@ -25,9 +27,9 @@ class ExponentialDistributionDataset(Dataset[FunctionBatch]):
     def __getitem__(self, item: int) -> FunctionBatch:
         if not 0 <= item < len(self):
             raise IndexError(f"Index {item} out of range")
-        vector_dim = self.function.num_inputs
-        if vector_dim is None:
-            vector_dim = self.vector_dim
-        x = torch.empty(self.block_size, vector_dim).exponential_(self.lambd)
+        input_shape = self.function.input_shape
+        if input_shape is None:
+            input_shape = self.input_shape
+        x = self.std * torch.randn(self.block_size, input_shape[0], input_shape[1]) + self.mean
         y = self.function(x)
         return FunctionBatch(x, y)
