@@ -11,15 +11,23 @@ class MLPApproximator(nn.Module):
         num_outputs: int,
         hidden_size: int,
         nonlin: nn.Module,
+        depth: int = 3,
         init_weights: bool = True,
     ):
         super().__init__()
-        self.mlp = nn.Sequential(
+        layers = [
             nn.Linear(num_inputs, hidden_size),
             nonlin,
             nn.BatchNorm1d(hidden_size),
-            nn.Linear(hidden_size, num_outputs),
-        )
+        ]
+        for idx in range(depth - 2):
+            layers.extend([
+                nn.Linear(hidden_size, hidden_size),
+                nonlin,
+                nn.BatchNorm1d(hidden_size),
+            ])
+        layers.append(nn.Linear(hidden_size, num_outputs))
+        self.mlp = nn.Sequential(*layers)
         if init_weights:
             self.apply(partial(init_weights_kaiming_normal, module_types=[nn.Linear]))
 

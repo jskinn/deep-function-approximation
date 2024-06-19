@@ -17,6 +17,7 @@ trainer:
           function: "reciprocal"
           data_distribution: "uniform"
           mlp_hidden_size: "d128"
+          mlp_depth: "d3"
           mlp_nonlin: "relu"
           mlp_num_layers: "l2"
   max_epochs: 40
@@ -36,6 +37,7 @@ model:
         num_inputs: 1
         num_outputs: 1
         hidden_size: 128
+        depth: 3
         nonlin:
           class_path: torch.nn.ReLU
           init_args:
