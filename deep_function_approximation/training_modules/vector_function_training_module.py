@@ -79,10 +79,17 @@ class VectorFunctionTrainingModule(LightningModule):
 
         num_inputs = x.size(-1)
         num_outputs = y.size(-1)
-        fig, axes = plt.subplots(num_inputs, num_outputs, squeeze=False)
+        fig, axes = plt.subplots(
+            num_inputs,
+            num_outputs,
+            squeeze=False,
+            layout="constrained",
+            figsize=(6.4 * num_outputs, 4.8 * num_inputs),
+        )
         for x_idx in range(num_inputs):
             for y_idx in range(num_outputs):
                 y_range = min(3 * float(y[:, y_idx].std()), 10)
+                y_mean = y[:, y_idx].mean()
                 axes[x_idx][y_idx].plot(
                     x[:, x_idx], y[:, y_idx], markersize=1, linestyle="none", marker="."
                 )
@@ -93,7 +100,7 @@ class VectorFunctionTrainingModule(LightningModule):
                     linestyle="none",
                     marker=".",
                 )
-                axes[x_idx][y_idx].set_ylim(-1 * y_range, 1 * y_range)
+                axes[x_idx][y_idx].set_ylim(y_mean - y_range, y_mean + y_range)
         mlflow_logger.experiment.log_figure(
             mlflow_logger.run_id,
             fig,
