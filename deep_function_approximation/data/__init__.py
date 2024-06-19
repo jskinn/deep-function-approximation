@@ -1,4 +1,6 @@
 from .function_batch import FunctionBatch
+from .vector_dataset_factory import get_vector_dataset
 from .normal_distribution_dataset import NormalDistributionDataset
 from .exponential_distribution_dataset import ExponentialDistributionDataset
+from .uniform_distribution_dataset import UniformDistributionDataset
 from .matrix_normal_dataset import MatrixNormalDataset

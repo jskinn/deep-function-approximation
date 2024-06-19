@@ -5,16 +5,16 @@ trainer:
     - class_path: lightning.pytorch.loggers.TensorBoardLogger
       init_args:
         save_dir: "lightning_logs"
-        name: "mlp_reciprocal_normal"
+        name: "mlp_reciprocal_uniform"
     - class_path: lightning.pytorch.loggers.MLFlowLogger
       init_args:
         experiment_name: "vector function approximation"
-        run_name: "mlp reciprocal normal"
+        run_name: "mlp reciprocal uniform"
         tracking_uri: "http://localhost:8080"
         tags:
           network: "mlp"
           function: "reciprocal"
-          data_distribution: "normal"
+          data_distribution: "uniform"
           mlp_hidden_size: "d128"
           mlp_nonlin: "relu"
           mlp_num_layers: "l2"
@@ -48,9 +48,13 @@ data:
   init_args:
     function:
       class_path: deep_function_approximation.vector_functions.reciprocal.ReciprocalFunction
+    distribution: "uniform"
     batch_size: 16
     block_size: 256
     num_workers: 10
     training_batches: 1024
     validation_batches: 16
     test_batches: 16
+    dataset_kwargs:
+      min_value: -10
+      max_value: 10
