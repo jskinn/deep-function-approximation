@@ -13,6 +13,7 @@ class LogPiLayer(nn.Module):
         self.bias = nn.Parameter(torch.zeros(output_dim))
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        skip = x
         imaginary = torch.pi * (1.0 - torch.sign(x)) / 2.0
         x = x.abs().log()
         x = nn.functional.linear(x, self.weight, self.bias)
@@ -23,4 +24,5 @@ class LogPiLayer(nn.Module):
         imaginary = nn.functional.linear(imaginary, self.weight)
         imaginary = imaginary / self.scale
         x = x * imaginary.cos()
+        x = x + skip
         return x

@@ -18,8 +18,12 @@ class SPSApproximator(nn.Module):
         super().__init__()
         self.network = nn.Sequential(
             nn.Linear(num_inputs, hidden_size),
+            nn.ReLU(inplace=True),
             nn.BatchNorm1d(hidden_size),
             LogPiLayer(hidden_size, hidden_size),
+            nn.BatchNorm1d(hidden_size),
+            nn.Linear(hidden_size, hidden_size),
+            nn.ReLU(inplace=True),
             nn.BatchNorm1d(hidden_size),
             nn.Linear(hidden_size, num_outputs),
         )
