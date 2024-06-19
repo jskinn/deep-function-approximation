@@ -19,7 +19,6 @@ trainer:
           mlp_hidden_size: "d128"
           mlp_depth: "d3"
           mlp_nonlin: "relu"
-          mlp_num_layers: "l2"
   max_epochs: 40
 #  detect_anomaly: true
   num_sanity_val_steps: 1

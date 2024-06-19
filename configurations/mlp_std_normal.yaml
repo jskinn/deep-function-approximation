@@ -15,6 +15,7 @@ trainer:
           network: "mlp"
           function: "standard deviation"
           data_distribution: "normal"
+          mlp_depth: "d3"
           mlp_hidden_size: "d128"
           mlp_nonlin: "relu"
           input_dimension: "16d"
@@ -35,6 +36,7 @@ model:
         num_inputs: 16
         num_outputs: 1
         hidden_size: 128
+        depth: 3
         nonlin:
           class_path: torch.nn.ReLU
           init_args:

@@ -15,6 +15,7 @@ trainer:
           network: "mlp"
           function: "inverse"
           data_distribution: "normal"
+          mlp_depth: "d3"
           mlp_hidden_size: "d128"
           mlp_nonlin: "relu"
           input_shape: "3x3"
@@ -36,6 +37,7 @@ model:
         num_inputs: 9
         num_outputs: 9
         hidden_size: 128
+        depth: 3
         nonlin:
           class_path: torch.nn.ReLU
           init_args:

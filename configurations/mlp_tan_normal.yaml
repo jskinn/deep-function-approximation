@@ -15,7 +15,8 @@ trainer:
           network: "mlp"
           function: "tangent"
           data_distribution: "normal"
-          mlp_hidden_size: "d2048"
+          mlp_depth: "d3"
+          mlp_hidden_size: "d128"
           mlp_nonlin: "relu"
   max_epochs: 100
 #  detect_anomaly: true
@@ -33,7 +34,8 @@ model:
       init_args:
         num_inputs: 1
         num_outputs: 1
-        hidden_size: 2048
+        hidden_size: 128
+        depth: 3
         nonlin:
           class_path: torch.nn.ReLU
           init_args:
