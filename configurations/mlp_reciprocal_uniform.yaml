@@ -11,6 +11,7 @@ trainer:
         experiment_name: "vector function approximation"
         run_name: "mlp reciprocal uniform"
         tracking_uri: "http://localhost:8080"
+        log_model: false
         tags:
           network: "mlp"
           function: "reciprocal"
