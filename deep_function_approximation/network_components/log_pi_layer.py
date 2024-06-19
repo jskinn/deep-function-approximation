@@ -8,7 +8,9 @@ class LogPiLayer(nn.Module):
         super().__init__()
         self.scale = torch.tensor(output_dim, dtype=torch.float32).sqrt()
         weight = torch.randn((output_dim, input_dim))
-        weight = weight * math.sqrt(2 / output_dim) + 1.0
+        weight = weight * math.sqrt(2 / output_dim)
+        diagonal = weight.diagonal()
+        diagonal += 1
         self.weight = nn.Parameter(weight)
         self.bias = nn.Parameter(torch.zeros(output_dim))
 
