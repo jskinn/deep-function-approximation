@@ -29,7 +29,7 @@ class LogSpaceConverter(nn.Module):
         exponent = x[:, 0:num_outputs:step]
         sign = x[:, 1:num_outputs:step]
         exponent = exponent.clip(min=-self.max_exponent, max=self.max_exponent)
-        exponent = exponent.exp()
+        exponent = exponent.exp().abs()
         sign = torch.tanh(sign)
         output = exponent * sign
         if self.scalar_output:
