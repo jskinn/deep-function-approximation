@@ -1,0 +1,57 @@
+seed_everything: 1415926535
+trainer:
+  logger:
+    # Note: Pytorch lightning uses the first logger to determine the trainers "log_dir".
+    - class_path: lightning.pytorch.loggers.TensorBoardLogger
+      init_args:
+        save_dir: "lightning_logs"
+        name: "mlp_log_quotient_normal"
+    - class_path: lightning.pytorch.loggers.MLFlowLogger
+      init_args:
+        experiment_name: "vector function approximation"
+        run_name: "mlp log quotient normal"
+        tracking_uri: "http://localhost:8080"
+        tags:
+          network: "mlp"
+          function: "log quotient"
+          data_distribution: "normal"
+          mlp_depth: "d3"
+          mlp_hidden_size: "d128"
+          mlp_nonlin: "relu"
+  max_epochs: 40
+#  detect_anomaly: true
+  num_sanity_val_steps: 1
+  callbacks:
+    class_path: lightning.pytorch.callbacks.ModelSummary
+    init_args:
+      max_depth: 5
+model:
+  class_path: deep_function_approximation.training_modules.VectorFunctionTrainingModule
+  init_args:
+    matmul_precision: "high"
+    network:
+      class_path: deep_function_approximation.function_approximators.mlp_approximator.MLPApproximator
+      init_args:
+        num_inputs: 2
+        num_outputs: 2
+        hidden_size: 128
+        depth: 3
+        nonlin:
+          class_path: torch.nn.ReLU
+          init_args:
+            inplace: true
+    loss_function:
+      class_path: torch.nn.MSELoss
+      init_args:
+        reduction: "mean"
+data:
+  class_path: deep_function_approximation.data_modules.VectorFunctionDataModule
+  init_args:
+    function:
+      class_path: deep_function_approximation.vector_functions.log_quotient.LogQuotientFunction
+    batch_size: 16
+    block_size: 256
+    num_workers: 10
+    training_batches: 1024
+    validation_batches: 16
+    test_batches: 16
