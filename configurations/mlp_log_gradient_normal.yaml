@@ -5,15 +5,15 @@ trainer:
     - class_path: lightning.pytorch.loggers.TensorBoardLogger
       init_args:
         save_dir: "lightning_logs"
-        name: "mlp_linear_gradient_normal"
+        name: "mlp_log_gradient_normal"
     - class_path: lightning.pytorch.loggers.MLFlowLogger
       init_args:
         experiment_name: "vector function approximation"
-        run_name: "mlp linear gradient normal"
+        run_name: "mlp log linear gradient normal"
         tracking_uri: "http://localhost:8080"
         tags:
           network: "mlp"
-          function: "linear gradient"
+          function: "log linear gradient"
           data_distribution: "normal"
           loss_function: "l1"
           mlp_depth: "d3"
@@ -34,7 +34,7 @@ model:
       class_path: deep_function_approximation.function_approximators.mlp_approximator.MLPApproximator
       init_args:
         num_inputs: 4
-        num_outputs: 1
+        num_outputs: 2
         hidden_size: 128
         depth: 3
         nonlin:
@@ -49,7 +49,7 @@ data:
   class_path: deep_function_approximation.data_modules.VectorFunctionDataModule
   init_args:
     function:
-      class_path: deep_function_approximation.vector_functions.linear_gradient.LinearGradientFunction
+      class_path: deep_function_approximation.vector_functions.log_gradient.LogLinearGradientFunction
     batch_size: 16
     block_size: 256
     num_workers: 10

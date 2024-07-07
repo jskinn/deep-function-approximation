@@ -8,10 +8,10 @@ class LinearGradientFunction(IVectorFunction):
         y1 = x[:, 1:2]
         x2 = x[:, 2:3]
         y2 = x[:, 3:4]
-        return torch.nan_to_num((x2 - x1) / (y2 - y1))
+        return torch.nan_to_num((y2 - y1) / (x2 - x1 + 4.0)).clip_(min=-1e4, max=1e4)
 
     @property
-    def num_inputs(self) -> None:
+    def num_inputs(self) -> int:
         return 4
 
     @property

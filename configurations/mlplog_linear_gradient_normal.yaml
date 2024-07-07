@@ -5,17 +5,17 @@ trainer:
     - class_path: lightning.pytorch.loggers.TensorBoardLogger
       init_args:
         save_dir: "lightning_logs"
-        name: "mlp_linear_gradient_normal"
+        name: "mlplog_linear_gradient_normal"
     - class_path: lightning.pytorch.loggers.MLFlowLogger
       init_args:
         experiment_name: "vector function approximation"
-        run_name: "mlp linear gradient normal"
+        run_name: "mlplog linear gradient normal"
         tracking_uri: "http://localhost:8080"
         tags:
-          network: "mlp"
+          network: "mlp with log space converter"
           function: "linear gradient"
           data_distribution: "normal"
-          loss_function: "l1"
+          loss_function: "scale-sign-l1"
           mlp_depth: "d3"
           mlp_hidden_size: "d128"
           mlp_nonlin: "relu"
@@ -31,20 +31,17 @@ model:
   init_args:
     matmul_precision: "high"
     network:
-      class_path: deep_function_approximation.function_approximators.mlp_approximator.MLPApproximator
+      class_path: deep_function_approximation.function_approximators.mlplog_approximator.MLPLogApproximator
       init_args:
         num_inputs: 4
         num_outputs: 1
         hidden_size: 128
-        depth: 3
         nonlin:
           class_path: torch.nn.ReLU
           init_args:
             inplace: true
     loss_function:
-      class_path: torch.nn.L1Loss
-      init_args:
-        reduction: "mean"
+      class_path: deep_function_approximation.loss_functions.ScaleSignLoss
 data:
   class_path: deep_function_approximation.data_modules.VectorFunctionDataModule
   init_args:

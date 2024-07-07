@@ -15,6 +15,7 @@ trainer:
           network: "mlp"
           function: "linear interpolate to zero"
           data_distribution: "normal"
+          loss_function: "l2"
           mlp_depth: "d3"
           mlp_hidden_size: "d128"
           mlp_nonlin: "relu"
