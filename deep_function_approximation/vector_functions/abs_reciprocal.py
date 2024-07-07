@@ -2,9 +2,9 @@ import torch
 from .i_vector_function import IVectorFunction
 
 
-class ReciprocalFunction(IVectorFunction):
+class AbsoluteReciprocalFunction(IVectorFunction):
     def __call__(self, x: torch.Tensor) -> torch.Tensor:
-        return torch.nan_to_num(1 / x).clip_(min=-1e4, max=1e4)
+        return (1.0 / x.abs()).nan_to_num().clip_(min=-1e4, max=1e4)
 
     @property
     def num_inputs(self) -> int:

@@ -14,6 +14,7 @@ trainer:
         tags:
           network: "mlp with log space converter"
           function: "sine"
+          loss_function: "scale-sign"
           data_distribution: "normal"
           mlp_hidden_size: "d128"
   max_epochs: 40
@@ -38,9 +39,7 @@ model:
           init_args:
             inplace: true
     loss_function:
-      class_path: torch.nn.MSELoss
-      init_args:
-        reduction: "mean"
+      class_path: deep_function_approximation.loss_functions.ScaleSignLoss
 data:
   class_path: deep_function_approximation.data_modules.VectorFunctionDataModule
   init_args:

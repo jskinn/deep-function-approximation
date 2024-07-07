@@ -15,7 +15,7 @@ class LogSpaceConverter(nn.Module):
     and returns a BxN tensor.
     """
 
-    def __init__(self, num_inputs: int, num_outputs: int, scalar_output: bool = False, max_exponent: float = 18.0):
+    def __init__(self, num_inputs: int, num_outputs: int, scalar_output: bool = False, max_exponent: float = 10.0):
         super().__init__()
         self.scalar_output = bool(scalar_output)
         self.max_exponent = abs(float(max_exponent))

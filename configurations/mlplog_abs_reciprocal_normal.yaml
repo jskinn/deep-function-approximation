@@ -5,19 +5,19 @@ trainer:
     - class_path: lightning.pytorch.loggers.TensorBoardLogger
       init_args:
         save_dir: "lightning_logs"
-        name: "mlplog_reciprocal_normal"
+        name: "mlplog_abs_reciprocal_normal"
     - class_path: lightning.pytorch.loggers.MLFlowLogger
       init_args:
         experiment_name: "vector function approximation"
-        run_name: "mlplog reciprocal normal"
+        run_name: "mlplog absolute reciprocal normal"
         tracking_uri: "http://localhost:8080"
         tags:
           network: "mlp with log space converter"
-          function: "reciprocal"
-          loss_function: "scale-sign"
+          function: "absolute reciprocal"
+          loss_function: "scale-sign-l1"
           data_distribution: "normal"
           mlp_hidden_size: "d128"
-          max_value: "+-1e1"
+          max_value: "+-1e4"
   max_epochs: 100
 #  detect_anomaly: true
   num_sanity_val_steps: 1
@@ -45,7 +45,7 @@ data:
   class_path: deep_function_approximation.data_modules.VectorFunctionDataModule
   init_args:
     function:
-      class_path: deep_function_approximation.vector_functions.reciprocal.ReciprocalFunction
+      class_path: deep_function_approximation.vector_functions.abs_reciprocal.AbsoluteReciprocalFunction
     batch_size: 16
     block_size: 256
     num_workers: 10
